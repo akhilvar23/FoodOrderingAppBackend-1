@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/restaurant")
 public class RestaurantController {
-
+    //Mehender Narang
     @Autowired private RestaurantService restaurantService;
 
     @Autowired private CategoryService categoryService;
