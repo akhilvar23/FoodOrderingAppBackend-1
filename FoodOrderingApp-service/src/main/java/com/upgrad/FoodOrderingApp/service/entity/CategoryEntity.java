@@ -43,6 +43,12 @@ public class CategoryEntity implements Serializable, Comparable<CategoryEntity> 
   @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
   private List<ItemEntity> items;
 
+  @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+  @JoinTable(name = "category_item",
+          joinColumns = @JoinColumn(name = "category_id"),
+          inverseJoinColumns = @JoinColumn(name = "item_id"))
+  private List<ItemEntity> itemList;
+
   public Integer getId() {
     return id;
   }
@@ -75,6 +81,12 @@ public class CategoryEntity implements Serializable, Comparable<CategoryEntity> 
     this.items = items;
   }
 
+  public List<ItemEntity> getItemList() {
+    return itemList;
+  }
+
+  @ManyToMany(mappedBy = "categories")
+  private List<RestaurantEntity> restaurantList;
   @Override
   public boolean equals(Object obj) {
     return EqualsBuilder.reflectionEquals(this, obj, Boolean.FALSE);
@@ -93,5 +105,12 @@ public class CategoryEntity implements Serializable, Comparable<CategoryEntity> 
   @Override
   public int compareTo(CategoryEntity categoryEntity) {
     return 0;
+  }
+
+  public List<RestaurantEntity> getRestaurantList() {
+    return restaurantList;
+  }
+  public void setRestaurantList(List<RestaurantEntity> restaurantList) {
+    this.restaurantList = restaurantList;
   }
 }

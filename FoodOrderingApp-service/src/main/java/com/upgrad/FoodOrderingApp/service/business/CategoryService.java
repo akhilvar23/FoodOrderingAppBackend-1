@@ -22,6 +22,15 @@ public class CategoryService {
 
   @Autowired private RestaurantDao restaurantDao;
 
+  @Transactional(propagation = Propagation.REQUIRED)
+  public CategoryEntity checkCategoryExists(String categoryId) throws CategoryNotFoundException {
+    CategoryEntity categoryEntity = categoryDao.checkCategoryExists(categoryId);
+    if (categoryEntity == null) {
+      throw new CategoryNotFoundException("CNF-002", "No category by this id");
+    } else {
+      return categoryEntity;
+    }
+  }
   /**
    * Method takes no input and returns CategoryEntity List
    *

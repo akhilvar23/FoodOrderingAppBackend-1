@@ -55,9 +55,9 @@ public class ItemEntity implements Serializable {
   private Integer price;
 
   @Column(name = "type")
-  @Size(max = 10)
   @NotNull
-  private ItemType type;
+  @Size(max = 10)
+  private String type;
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
@@ -101,11 +101,11 @@ public class ItemEntity implements Serializable {
     this.price = price;
   }
 
-  public ItemType getType() {
+  public String getType() {
     return type;
   }
 
-  public void setType(ItemType type) {
+  public void setType(String type) {
     this.type = type;
   }
 
