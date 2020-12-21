@@ -35,7 +35,7 @@ public class AddressEntity implements Serializable, Comparable<AddressEntity> {
 
   @Column(name = "flat_buil_number")
   @Size(max = 255)
-  private String flatBuilNo;
+  private String flatBillNumber;
 
   @Column(name = "locality")
   @Size(max = 255)
@@ -45,13 +45,15 @@ public class AddressEntity implements Serializable, Comparable<AddressEntity> {
   @Size(max = 30)
   private String city;
 
+  @ManyToOne
+  @NotNull
+  @JoinColumn(name = "state_id")
+  private StateEntity stateEntity;
+
   @Column(name = "pincode")
   @Size(max = 30)
   private String pincode;
 
-  @OneToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "state_id", referencedColumnName = "id")
-  private StateEntity state;
 
   @Column(name = "active")
   private Integer active;
@@ -72,13 +74,13 @@ public class AddressEntity implements Serializable, Comparable<AddressEntity> {
       String locality,
       String city,
       String pincode,
-      StateEntity state) {
+      StateEntity stateEntity) {
     this.uuid = uuid;
-    this.flatBuilNo = flatBuilNo;
+    this.flatBillNumber = flatBuilNo;
     this.locality = locality;
     this.city = city;
     this.pincode = pincode;
-    this.state = state;
+    this.stateEntity = stateEntity;
   }
 
   public AddressEntity() {}
@@ -100,11 +102,11 @@ public class AddressEntity implements Serializable, Comparable<AddressEntity> {
   }
 
   public String getFlatBuilNo() {
-    return flatBuilNo;
+    return flatBillNumber;
   }
 
   public void setFlatBuilNo(String flatBuilNo) {
-    this.flatBuilNo = flatBuilNo;
+    this.flatBillNumber = flatBuilNo;
   }
 
   public String getLocality() {
@@ -132,11 +134,11 @@ public class AddressEntity implements Serializable, Comparable<AddressEntity> {
   }
 
   public StateEntity getState() {
-    return state;
+    return stateEntity;
   }
 
   public void setState(StateEntity state) {
-    this.state = state;
+    this.stateEntity = state;
   }
 
   public Integer getActive() {
@@ -181,5 +183,28 @@ public class AddressEntity implements Serializable, Comparable<AddressEntity> {
   @Override
   public String toString() {
     return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+  }
+
+  public String getPinCode() {
+    return pincode;
+  }
+  public void setPinCode(String pincode) {
+    this.pincode = pincode;
+  }
+
+  public String getFlatBillNumber() {
+    return flatBillNumber;
+  }
+
+  public void setFlatBillNumber(String flatBillNumber) {
+    this.flatBillNumber = flatBillNumber;
+  }
+
+  public StateEntity getStateEntity() {
+    return stateEntity;
+  }
+
+  public void setStateEntity(StateEntity stateEntity) {
+    this.stateEntity = stateEntity;
   }
 }

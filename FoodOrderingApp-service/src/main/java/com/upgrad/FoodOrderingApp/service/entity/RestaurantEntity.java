@@ -71,14 +71,10 @@ public class RestaurantEntity implements Serializable {
   @NotNull
   private Integer numberOfCustomersRated;
 
-  @OneToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "address_id", referencedColumnName = "id")
-  @OnDelete(action = OnDeleteAction.CASCADE)
+  @OneToOne
   @NotNull
-  @ToStringExclude
-  @HashCodeExclude
-  @EqualsExclude
-  private AddressEntity address;
+  @JoinColumn(name = "address_id")
+  private AddressEntity addressId;
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
@@ -86,6 +82,12 @@ public class RestaurantEntity implements Serializable {
       joinColumns = {@JoinColumn(name = "restaurant_id")},
       inverseJoinColumns = {@JoinColumn(name = "item_id")})
   private Set<ItemEntity> items = new HashSet<ItemEntity>();
+
+  @ManyToMany
+  @JoinTable(name = "restaurant_category",
+          joinColumns = @JoinColumn(name = "restaurant_id"),
+          inverseJoinColumns = @JoinColumn(name = "category_id"))
+  private Set<CategoryEntity> categories;
 
   public Integer getId() {
     return id;
@@ -109,6 +111,18 @@ public class RestaurantEntity implements Serializable {
 
   public void setRestaurantName(String restaurantName) {
     this.restaurantName = restaurantName;
+  }
+
+  public AddressEntity getAddressId() {
+    return addressId;
+  }
+
+  public void setAddressId(AddressEntity addressId) {
+    this.addressId = addressId;
+  }
+
+  public Set<CategoryEntity> getCategories() {
+    return categories;
   }
 
   public String getPhotoUrl() {
@@ -144,11 +158,11 @@ public class RestaurantEntity implements Serializable {
   }
 
   public AddressEntity getAddress() {
-    return address;
+    return addressId;
   }
 
   public void setAddress(AddressEntity address) {
-    this.address = address;
+    this.addressId = address;
   }
 
   public Set<RestaurantCategoryEntity> getRestaurantCategoryEntitySet() {
@@ -181,5 +195,13 @@ public class RestaurantEntity implements Serializable {
   @Override
   public String toString() {
     return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+  }
+
+  public String getPhoto_url() {
+    return photoUrl;
+  }
+
+  public void setNumberOfCustomersRated(Integer numberOfCustomersRated) {
+    this.numberOfCustomersRated = numberOfCustomersRated;
   }
 }
